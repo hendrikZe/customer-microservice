@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- ========================= DATABASE RELATED DEFINITIONS ========================= -->
+	<!-- Here we setup the dataSource bean. It will be used by the persistence 
+		framework below. The jdbc settings are replaced by the placeholder data found 
+		in the jdbc.properties file defined above. -->
+
+	<import resource="CustomerApplicationContext-JDBC-Connector-DS.xml"/>
+	
+	<!-- ========================= JpaAdapter ========================= -->
+	<bean id="customerJpaAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="showSql" value="false" />
+		<property name="generateDdl" value="true" />
+		<property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+	</bean>
+
+
+	<!-- ========================= HIBERNATE RELATED DEFINITIONS ========================= -->
+	<!-- We're using Hibernate's JPA implementation as our O/R mapping framework. 
+		The RDBMS back-end is a MySQL database. The dataSource bean is referenced 
+		as it's a required injection for the entityManagerFactory. -->
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="customerDataSource" />
+		<property name="jpaVendorAdapter" ref="customerJpaAdapter" />
+		<!-- 
+		<property name="persistenceUnitName" value="ShopPersistenceUnit"/>
+		<property name="persistenceXmlLocation" value="classpath:/META-INF/titan-persistence.xml" /> -->
+		<property name="packagesToScan" value="de.leuphana"/>
+
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.hbm2ddl.auto" value="update" />
+				<entry key="hibernate.default_batch_fetch_size" value="50" />
+				<entry key="hibernate.jdbc.batch_size" value="50" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ========================= TRANSACTION MANAGEMENT ========================= -->
+	<!-- Taken from : http://blog.interface21.com/main/2006/08/07/using-jpa-in-spring-without-referencing-spring/ 
+		Uses Spring declarative transaction management and AOP to make transactions 
+		automatic. The JpaTransactionManager is responsible for creating EntityManagers 
+		opening transactions and binding them to the current thread context. The 
+		<tx:annotation-driven /> simply tells Spring to put transactional advice 
+		on any class or method that has an @Transactional annotation on it. You can 
+		now just write your main-line DAO logic without having to worry about transactional 
+		semantics. -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+
+	<!-- This enables us to annotate our service classes with the @PersistenceContext 
+		annotation which will free us from injecting these explicity with the EntityManager 
+		reference. -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- Tells Spring's AOP that our transactions are specified by using annotations. 
+		Need Jdk5. Our transaction manager is the JPA transaction manager defined 
+		above. -->
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+</beans>
