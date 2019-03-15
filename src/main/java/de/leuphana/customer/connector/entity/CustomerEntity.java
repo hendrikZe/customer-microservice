@@ -41,7 +41,7 @@ public class CustomerEntity {
 		this.customerId = customerId;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="CustomerEntity")
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn()
 	public CartEntity getCartEntity() {
 		return cartEntity;
@@ -73,7 +73,7 @@ public class CustomerEntity {
 		orderEntities.add(orderEntity);
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="CustomerEntity")
 	@JoinColumn
 	public List<OrderEntity> getOrderEntities() {
 		return orderEntities;
