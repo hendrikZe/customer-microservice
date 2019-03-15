@@ -6,10 +6,15 @@
 
 	<mapping>
 		<class-a>de.leuphana.customer.component.structure.Customer</class-a>
-		<class-b>de.leuphana.customer.connector.entity.CustomerEntity</class-b>
+		<class-b>de.leuphana.customer.connector.entity.CustomerEntity
+		</class-b>
 		<field>
 			<a>cart</a>
 			<b>cartEntity</b>
+		</field>
+		<field>
+			<a>orders</a>
+			<b>orderEntities</b>
 		</field>
 	</mapping>
 

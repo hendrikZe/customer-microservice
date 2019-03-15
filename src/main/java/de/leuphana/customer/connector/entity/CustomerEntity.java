@@ -1,13 +1,17 @@
 package de.leuphana.customer.connector.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import de.leuphana.customer.component.structure.Cart;
+import de.leuphana.order.connector.entity.OrderEntity;
 
 @Entity
 public class CustomerEntity {
@@ -19,7 +23,7 @@ public class CustomerEntity {
 	private String name;
 	private String address;
 	//private Cart cart; <- verschoben als relationales attribut, weil 1 Kunde = 1 Cart
-	//private Map<Integer, Order> orders;
+	private List<OrderEntity> orderEntities;
 	
 	//realitonal attributes
 	private CartEntity cartEntity;
@@ -37,8 +41,7 @@ public class CustomerEntity {
 		this.customerId = customerId;
 	}
 	
-
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="CustomerEntity")
 	@JoinColumn()
 	public CartEntity getCartEntity() {
 		return cartEntity;
@@ -65,9 +68,21 @@ public class CustomerEntity {
 		this.address = address;
 	}
 	
-	//public void addOrder(Order order) {
-		//orders.put(order.getOrderId(), order);
-	//}
+	
+	public void addOrderEntity(OrderEntity orderEntity) {
+		orderEntities.add(orderEntity);
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn
+	public List<OrderEntity> getOrderEntities() {
+		return orderEntities;
+	}
+
+	public void setOrderEntities(List<OrderEntity> orderEntities) {
+		this.orderEntities = orderEntities;
+	}
+
 
 }
 

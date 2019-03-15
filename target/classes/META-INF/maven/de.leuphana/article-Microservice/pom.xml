@@ -116,6 +116,14 @@
 			<artifactId>dozer</artifactId>
 			<version>5.5.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.leuphana.swa</groupId>
+			<artifactId>order-Microservice</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		
 
 	</dependencies>
 </project>

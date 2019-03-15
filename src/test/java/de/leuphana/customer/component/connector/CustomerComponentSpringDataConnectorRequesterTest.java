@@ -2,6 +2,8 @@ package de.leuphana.customer.component.connector;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +18,8 @@ import de.leuphana.customer.component.structure.Cart;
 import de.leuphana.customer.component.structure.CartItem;
 import de.leuphana.customer.component.structure.Customer;
 import de.leuphana.customer.connector.CustomerComponentSpringDataConnectorRequester;
+import de.leuphana.order.component.structure.Order;
+import de.leuphana.order.component.structure.OrderPosition;
 
 public class CustomerComponentSpringDataConnectorRequesterTest {
 
@@ -27,21 +31,31 @@ public class CustomerComponentSpringDataConnectorRequesterTest {
 		
 		customerComponentSpringDataConnectorRequester = (CustomerComponentSpringDataConnectorRequester) applicationContext.getBean("customerConnectorSpringDataJpa");
 		
+		//Object initialization
 		ArticleDescription articleDescription = new ArticleDescription();
+		Article article = new Article();
+		Cart cart = new Cart ();
+		Customer customer = new Customer();
+		Order order = new Order();
+		OrderPosition orderPosition = new OrderPosition();
+
 		articleDescription.setAuthor("Egon");
 		articleDescription.setText("Toller Article!!!");
-		
-		Article article = new Article();
+
 		article.setName("Hut");
 		article.setManufactor("Gut");
 		article.setPrice(12.45f);
 		article.setArticleDescription(articleDescription);
 		
-		//Cart cart = new Cart ();
-		//cart.addCartItem(article, 1);
-		Customer customer = new Customer();
+		
+		cart.addCartItem(article, 1);
+		
+		orderPosition.setArticle(article);
+		order.addOrderPosition(orderPosition);
 		
 		customer.setName("Hugo");
+		customer.setCart(cart);
+		customer.addOrder(order);
 		customerComponentSpringDataConnectorRequester.insertCustomer(customer);
 	}
 		
