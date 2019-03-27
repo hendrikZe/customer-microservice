@@ -12,11 +12,15 @@ import de.leuphana.customer.connector.mapper.CustomerMapper;
 
 
 
-public class CustomerComponentSpringDataConnectorRequester {
+public class CustomerSpringDataConnectorRequester {
 	
 	
 	@Autowired
 	private CustomerJpaRepository customerJpaRepository;
+	@Autowired
+	private CartJpaRepository cartJpaRepository;
+	@Autowired
+	private CartItemJpaRepository cartItemJpaRepository;
 
 	public Customer findCustomerById(Integer id) {
 		CustomerEntity customerEntity = customerJpaRepository.findOne(id);
@@ -33,7 +37,7 @@ public class CustomerComponentSpringDataConnectorRequester {
 	public List<Customer> findByNameLike(String name) {
 		List<CustomerEntity> customerEntityList = customerJpaRepository.findByNameLike(name);
 		
-		// TODO ArticleMapper um mapping-Methoden für Behälter erweitern
+		// TODO ArticleMapper um mapping-Methoden fï¿½r Behï¿½lter erweitern
 		List<Customer> customers = new ArrayList<>();
 		for (CustomerEntity customerEntity : customerEntityList) {
 			customers.add(CustomerMapper.convert2Customer(customerEntity));

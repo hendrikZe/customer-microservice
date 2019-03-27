@@ -5,27 +5,24 @@ import de.leuphana.article.component.structure.Article;
 public class CartItem {
 
 	private int cartItemId;
-	private Article article;
+	private int articleId;
 	private int quantity;
 
 	public CartItem() {
 
 	}
 	
-	public CartItem (Article article) {
-		this.article = article;
-	}
 
 	public int getCartItemId() {
 		return cartItemId;
 	}
 
-	public Article getArticle() {
-		return article;
+	public int getArticle() {
+		return articleId;
 	}
 
-	public void setArticle(Article article) {
-		this.article = article;
+	public void setArticle(int articleId) {
+		this.articleId = articleId;
 	}
 
 	public int getQuantity() {

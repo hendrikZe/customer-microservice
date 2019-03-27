@@ -20,11 +20,11 @@ import de.leuphana.customer.component.structure.CartItem;
 public class CartEntity {
 
 	private int cartId;
-	private List<CartItemEntity> cartItemEntities;
+	private List<Integer> cartItemEntityIds;
 	private int numberOfArticles;
 
 	public CartEntity() {
-		cartItemEntities = new ArrayList<CartItemEntity>();
+		cartItemEntityIds = new ArrayList<Integer>();
 		numberOfArticles = 0;
 	}
 
@@ -38,48 +38,12 @@ public class CartEntity {
 		this.cartId = cartId;
 	}
 
-	public void addCartItem(ArticleEntity articleEntity) {
-		Integer articleId = articleEntity.getArticleId();
-		CartItemEntity cartItemEntity;
-		if (cartItemEntities.contains(articleId)) {
-			cartItemEntity = cartItemEntities.get(articleId);
-			cartItemEntity.incrementQuantity();
-		} else {
-			cartItemEntity = new CartItemEntity();
-			cartItemEntity.setArticleEntity(articleEntity);
-			cartItemEntities.add(cartItemEntity);
-		}
-		numberOfArticles++;
+	public List<Integer> getCartItemEntitieIds() {
+		return cartItemEntityIds;
 	}
 
-	public void deleteCartItem(int articleId) {
-		for (CartItemEntity cartItem : cartItemEntities) {
-			if (cartItem.getArticleEntity().getArticleId() == (articleId)) {
-				cartItemEntities.remove(cartItem.getCartItemId());
-				break;
-			}
-		}
-	}
-
-	public void decrementArticleQuantity(Integer articleId) {
-		if (cartItemEntities.contains(articleId)) {
-			CartItemEntity cartItem = (CartItemEntity) cartItemEntities.get(articleId);
-			cartItem.decrementQuantity();
-
-			if (cartItem.getQuantity() <= 0)
-				cartItemEntities.remove(articleId);
-
-			numberOfArticles--;
-		}
-	}
-
-	@OneToMany(cascade = CascadeType.ALL)
-	public List<CartItemEntity> getCartItemEntities() {
-		return cartItemEntities;
-	}
-
-	public void setCartItemEntities(List<CartItemEntity> cartItemEntities) {
-		this.cartItemEntities = cartItemEntities;
+	public void setCartItemEntitieIds(List<Integer> cartItemEntitieIds) {
+		this.cartItemEntityIds = cartItemEntitieIds;
 	}
 
 	public int getNumberOfArticles() {
@@ -90,17 +54,5 @@ public class CartEntity {
 		this.numberOfArticles = numberOfArticles;
 	}
 
-//	public double getTotalPrice() {
-//		double totalPrice = 0.0;
-//
-//		ArticleEntity article;
-//		for (CartItemEntity cartItem : getCartItemEntities()) {
-//			article = cartItem.getArticleEntity();
-//
-//			totalPrice += cartItem.getQuantity() * article.getPrice();
-//		}
-//
-//		return totalPrice;
-//	}
 
 }

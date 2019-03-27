@@ -8,33 +8,28 @@ import java.util.Map;
 import de.leuphana.order.component.structure.Order;
 
 public class Customer {
-	private static Integer lastGeneratedCustomerId;
 
 	//intrinsic attributes
 	private Integer customerId;
 	private String name;
 	private String address;
-	private Cart cart;
-	private List<Order> orders;
-
-	static {
-		lastGeneratedCustomerId = new Integer(1);
-	}
+	private int cartId;
+	private List<Integer> orderIds;
 
 	public Customer() {
-		orders = new ArrayList<Order>();
+		orderIds = new ArrayList<Integer>();
 	}
 
 	public Integer getCustomerId() {
 		return customerId;
 	}
 
-	public Cart getCart() {
-		return cart;
+	public int getCart() {
+		return cartId;
 	}
 	
-	public void setCart(Cart cart) {
-		this.cart = cart;
+	public void setCart(int cartId) {
+		this.cartId = cartId;
 	}
 
 	public String getName() {
@@ -53,20 +48,20 @@ public class Customer {
 		this.address = address;
 	}
 	
-	public void addOrder(Order order) {
-		orders.add(order);
+	public void addOrder(Integer orderId) {
+		orderIds.add(orderId);
 	}
 	
-	public void removeOder(Order order) {
-		orders.remove(order);
+	public void removeOderId(Integer orderId) {
+		orderIds.remove(orderId);
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
+	public List<Integer> getOrderIds() {
+		return orderIds;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setOrderIds(List<Integer> orderIds) {
+		this.orderIds = orderIds;
 	}
 
 }

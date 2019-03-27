@@ -1,9 +1,5 @@
 package de.leuphana.customer.component.connector;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,21 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import de.leuphana.article.component.structure.Article;
 import de.leuphana.article.component.structure.ArticleDescription;
 import de.leuphana.customer.component.structure.Cart;
-import de.leuphana.customer.component.structure.CartItem;
 import de.leuphana.customer.component.structure.Customer;
-import de.leuphana.customer.connector.CustomerComponentSpringDataConnectorRequester;
+import de.leuphana.customer.connector.CustomerSpringDataConnectorRequester;
 import de.leuphana.order.component.structure.Order;
 import de.leuphana.order.component.structure.OrderPosition;
 
-public class CustomerComponentSpringDataConnectorRequesterTest {
+public class CustomerSpringDataConnectorRequesterTest {
 
-	private CustomerComponentSpringDataConnectorRequester customerComponentSpringDataConnectorRequester;
+	private CustomerSpringDataConnectorRequester customerComponentSpringDataConnectorRequester;
 
 	@Before
 	public void setUp() throws Exception {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("CustomerApplicationContext-SpringData-Connector.xml");
 		
-		customerComponentSpringDataConnectorRequester = (CustomerComponentSpringDataConnectorRequester) applicationContext.getBean("customerConnectorSpringDataJpa");
+		customerComponentSpringDataConnectorRequester = (CustomerSpringDataConnectorRequester) applicationContext.getBean("customerConnectorSpringDataJpa");
 		
 		//Object initialization
 		ArticleDescription articleDescription = new ArticleDescription();
@@ -50,8 +45,8 @@ public class CustomerComponentSpringDataConnectorRequesterTest {
 		
 		cart.addCartItem(article, 1);
 		
-		orderPosition.setArticle(article);
-		order.addOrderPosition(orderPosition);
+	//	orderPosition.setArticle(article);
+		//order.addOrderPosition(orderPosition);
 		
 		customer.setName("Hugo");
 		customer.setCart(cart);

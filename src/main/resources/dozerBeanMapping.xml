@@ -9,21 +9,34 @@
 		<class-b>de.leuphana.customer.connector.entity.CustomerEntity
 		</class-b>
 		<field>
-			<a>cart</a>
-			<b>cartEntity</b>
+			<a>cartId</a>
+			<b>cartEntityId</b>
 		</field>
 		<field>
-			<a>orders</a>
-			<b>orderEntities</b>
+			<a>orderIds</a>
+			<b>orderEntityIds</b>
+		</field>
+	</mapping>
+	<mapping>
+		<class-a>de.leuphana.customer.component.structure.Cart</class-a>
+		<class-b>de.leuphana.customer.connector.entity.CartEntity
+		</class-b>
+		<field>
+			<a>cartItemIds</a>
+			<b>cartItemEntityIds</b>
+		</field>
+		<field>
+			<a>orderIds</a>
+			<b>orderEntityIds</b>
 		</field>
 	</mapping>
 
 	<mapping>
-		<class-a>de.leuphana.customer.component.structure.Cart</class-a>
-		<class-b>de.leuphana.customer.connector.entity.CartEntity</class-b>
+		<class-a>de.leuphana.customer.component.structure.CartItem</class-a>
+		<class-b>de.leuphana.customer.connector.entity.CartItemEntity</class-b>
 		<field>
-			<a>cartItems</a>
-			<b>cartItemEntities</b>
+			<a>articleId</a>
+			<b>articleEntityId</b>
 		</field>
 	</mapping>
 </mappings>

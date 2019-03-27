@@ -22,11 +22,9 @@ public class CustomerEntity {
 	private Integer customerId;
 	private String name;
 	private String address;
-	//private Cart cart; <- verschoben als relationales attribut, weil 1 Kunde = 1 Cart
-	private List<OrderEntity> orderEntities;
+	private int cartEntityId; 
+	private List<Integer> orderEntityIds;
 	
-	//realitonal attributes
-	private CartEntity cartEntity;
 	
 	public CustomerEntity() {
 	}
@@ -41,14 +39,13 @@ public class CustomerEntity {
 		this.customerId = customerId;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn()
-	public CartEntity getCartEntity() {
-		return cartEntity;
+
+	public int getCartEntityId() {
+		return cartEntityId;
 	}
 	
-	public void setCartEntity(CartEntity cartEntity) {
-		this.cartEntity = cartEntity;
+	public void setCartEntityId(int cartEntity) {
+		this.cartEntityId = cartEntity;
 	}
 
 
@@ -69,18 +66,17 @@ public class CustomerEntity {
 	}
 	
 	
-	public void addOrderEntity(OrderEntity orderEntity) {
-		orderEntities.add(orderEntity);
+	public void addOrderEntityId(int orderEntityId) {
+		orderEntityIds.add(orderEntityId);
 	}
 
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="CustomerEntity")
-	@JoinColumn
-	public List<OrderEntity> getOrderEntities() {
-		return orderEntities;
+
+	public List<Integer> getOrderEntitieIds() {
+		return orderEntityIds;
 	}
 
-	public void setOrderEntities(List<OrderEntity> orderEntities) {
-		this.orderEntities = orderEntities;
+	public void setOrderEntitieIds(List<Integer> orderEntitieIds) {
+		this.orderEntityIds = orderEntitieIds;
 	}
 
 

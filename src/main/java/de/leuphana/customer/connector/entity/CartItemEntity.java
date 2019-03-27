@@ -13,13 +13,8 @@ import de.leuphana.article.connector.entity.ArticleEntity;
 public class CartItemEntity {
 
 	private int cartItemId;
-	private ArticleEntity articleEntity;
+	private int articleEntityId;
 	private int quantity;
-
-//	public CartItemEntity(ArticleEntity articleEntity) {
-//		this.articleEntity = articleEntity;
-//		quantity = 1;
-//	}
 	
 	public CartItemEntity() {
 		// TODO Auto-generated constructor stub
@@ -35,13 +30,12 @@ public class CartItemEntity {
 		this.cartItemId = cartItemID;
 	}
 
-	@OneToOne(cascade=CascadeType.ALL)
-	public ArticleEntity getArticleEntity() {
-		return articleEntity;
+	public int getArticleEntityId() {
+		return articleEntityId;
 	}
 	
-	public void setArticleEntity(ArticleEntity articleEntity) {
-		this.articleEntity = articleEntity;
+	public void setArticleEntityId(int articleEntityId) {
+		this.articleEntityId = articleEntityId;
 	}
 
 	public int getQuantity() {

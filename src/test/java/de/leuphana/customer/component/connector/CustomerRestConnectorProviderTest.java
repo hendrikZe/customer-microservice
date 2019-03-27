@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CustomerComponentRestConnectorProviderTest {
+public class CustomerRestConnectorProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
