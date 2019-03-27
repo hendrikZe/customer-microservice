@@ -45,7 +45,7 @@ public class CustomerComponentSpringDataConnectorRequesterTest {
 		article.setName("Hut");
 		article.setManufactor("Gut");
 		article.setPrice(12.45f);
-		article.setArticleDescription(articleDescription);
+		article.setArticleDescriptionId(articleDescription.getArticleDescriptionId());
 		
 		
 		cart.addCartItem(article, 1);

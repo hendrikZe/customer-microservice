@@ -122,6 +122,12 @@
 			<artifactId>order-Microservice</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>de.leuphana</groupId>
+			<artifactId>article-microservice</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>
