@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -37,12 +38,12 @@ public class CartEntity {
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
-
-	public List<Integer> getCartItemEntitieIds() {
+	@ElementCollection(targetClass=Integer.class)
+	public List<Integer> getCartItemEntityIds() {
 		return cartItemEntityIds;
 	}
 
-	public void setCartItemEntitieIds(List<Integer> cartItemEntitieIds) {
+	public void setCartItemEntityIds(List<Integer> cartItemEntitieIds) {
 		this.cartItemEntityIds = cartItemEntitieIds;
 	}
 

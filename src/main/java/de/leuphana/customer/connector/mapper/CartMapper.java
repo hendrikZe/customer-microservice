@@ -18,7 +18,7 @@ public class CartMapper {
 		return mapper.map(cart, CartEntity.class);
 	}
 
-	public static Cart convert2Customer(CartEntity cartEntity) {
+	public static Cart convert2Cart(CartEntity cartEntity) {
 		return mapper.map(cartEntity, Cart.class);
 	}
 

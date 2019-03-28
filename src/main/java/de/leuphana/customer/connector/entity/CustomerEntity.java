@@ -3,6 +3,7 @@ package de.leuphana.customer.connector.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,7 +17,6 @@ import de.leuphana.order.connector.entity.OrderEntity;
 @Entity
 public class CustomerEntity {
 
-	private static Integer lastGeneratedCustomerId = null;
 
 	//intrinsic attributes
 	private Integer customerId;
@@ -70,12 +70,12 @@ public class CustomerEntity {
 		orderEntityIds.add(orderEntityId);
 	}
 
-
-	public List<Integer> getOrderEntitieIds() {
+	@ElementCollection(targetClass=Integer.class)
+	public List<Integer> getOrderEntityIds() {
 		return orderEntityIds;
 	}
 
-	public void setOrderEntitieIds(List<Integer> orderEntitieIds) {
+	public void setOrderEntityIds(List<Integer> orderEntitieIds) {
 		this.orderEntityIds = orderEntitieIds;
 	}
 

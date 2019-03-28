@@ -25,10 +25,6 @@
 			<a>cartItemIds</a>
 			<b>cartItemEntityIds</b>
 		</field>
-		<field>
-			<a>orderIds</a>
-			<b>orderEntityIds</b>
-		</field>
 	</mapping>
 
 	<mapping>

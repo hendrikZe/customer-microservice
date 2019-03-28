@@ -1,61 +1,52 @@
 package de.leuphana.customer.component.connector;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.leuphana.article.component.structure.Article;
-import de.leuphana.article.component.structure.ArticleDescription;
+import de.leuphana.customer.component.behaviour.CustomerService;
 import de.leuphana.customer.component.structure.Cart;
+import de.leuphana.customer.component.structure.CartItem;
 import de.leuphana.customer.component.structure.Customer;
 import de.leuphana.customer.connector.CustomerSpringDataConnectorRequester;
-import de.leuphana.order.component.structure.Order;
-import de.leuphana.order.component.structure.OrderPosition;
-
+@Rollback(false)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = { CustomerService.class }, webEnvironment = WebEnvironment.DEFINED_PORT)
 public class CustomerSpringDataConnectorRequesterTest {
-
+	@Autowired
 	private CustomerSpringDataConnectorRequester customerComponentSpringDataConnectorRequester;
-
+	private Customer customer;
 	@Before
 	public void setUp() throws Exception {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("CustomerApplicationContext-SpringData-Connector.xml");
-		
-		customerComponentSpringDataConnectorRequester = (CustomerSpringDataConnectorRequester) applicationContext.getBean("customerConnectorSpringDataJpa");
-		
+			
 		//Object initialization
-		ArticleDescription articleDescription = new ArticleDescription();
-		Article article = new Article();
 		Cart cart = new Cart ();
-		Customer customer = new Customer();
-		Order order = new Order();
-		OrderPosition orderPosition = new OrderPosition();
-
-		articleDescription.setAuthor("Egon");
-		articleDescription.setText("Toller Article!!!");
-
-		article.setName("Hut");
-		article.setManufactor("Gut");
-		article.setPrice(12.45f);
-		article.setArticleDescriptionId(articleDescription.getArticleDescriptionId());
-		
-		
-		cart.addCartItem(article, 1);
+		customer = new Customer();		
+		CartItem cartItem = new CartItem();
+		cartItem.setQuantity(3);
+		cartItem.setArticleId(13);
 		
 	//	orderPosition.setArticle(article);
 		//order.addOrderPosition(orderPosition);
 		
 		customer.setName("Hugo");
-		customer.setCart(cart);
-		customer.addOrder(order);
-		customerComponentSpringDataConnectorRequester.insertCustomer(customer);
+		customer.addOrderId(11);
+		customer = customerComponentSpringDataConnectorRequester.insertCustomer(customer,cart,Arrays.asList(cartItem));
 	}
 		
 	@After
 	public void tearDown() throws Exception {
+		//customerComponentSpringDataConnectorRequester.deleteCustomer(customer);
 	}
 
 	@Test

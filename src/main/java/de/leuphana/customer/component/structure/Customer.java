@@ -23,12 +23,15 @@ public class Customer {
 	public Integer getCustomerId() {
 		return customerId;
 	}
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 
-	public int getCart() {
+	public int getCartId() {
 		return cartId;
 	}
 	
-	public void setCart(int cartId) {
+	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
 
@@ -48,7 +51,7 @@ public class Customer {
 		this.address = address;
 	}
 	
-	public void addOrder(Integer orderId) {
+	public void addOrderId(Integer orderId) {
 		orderIds.add(orderId);
 	}
 	

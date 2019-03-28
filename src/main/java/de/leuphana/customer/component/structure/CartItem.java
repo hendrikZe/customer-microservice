@@ -17,11 +17,11 @@ public class CartItem {
 		return cartItemId;
 	}
 
-	public int getArticle() {
+	public int getArticleId() {
 		return articleId;
 	}
 
-	public void setArticle(int articleId) {
+	public void setArticleId(int articleId) {
 		this.articleId = articleId;
 	}
 
@@ -39,6 +39,17 @@ public class CartItem {
 
 	public void decrementQuantity() {
 		quantity--;
+	}
+
+
+	public void increaseQuantity(int quantity) {
+		this.quantity += quantity;
+		
+	}
+
+
+	public void decreaseQuantity(int quantity) {
+		this.quantity -= quantity;
 	}
 
 }

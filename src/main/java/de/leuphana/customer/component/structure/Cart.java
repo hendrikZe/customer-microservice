@@ -16,11 +16,11 @@ public class Cart {
 
 	
 
-	public List<Integer> getCartItems() {
+	public List<Integer> getCartItemIds() {
 		return cartItemIds;
 	}
 	
-	public void setCartItems(List<Integer> cartItemIds) {
+	public void setCartItemIds(List<Integer> cartItemIds) {
 		this.cartItemIds = cartItemIds;
 	}
 	
@@ -30,6 +30,19 @@ public class Cart {
 	}
 	public void setNumberOfArticles(int number) {
 		this.numberOfArticles = number;
+	}
+
+
+
+	public void addCartItemId(Integer cartItemId) {
+		this.cartItemIds.add(cartItemId);
+	}
+
+
+
+	public void removeCartItemId(Integer cartItemId) {
+		this.cartItemIds.remove(cartItemId);
+		
 	}
 
 
