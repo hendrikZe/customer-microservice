@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import de.leuphana.order.component.structure.Order;
 @Service
-@FeignClient(name="order-microservice", url= "http://localhost:8085/api/orders")
+@FeignClient(name="order-Microservice")
 public interface OrderRestConnectorRequester {
-	@GetMapping("/id/{orderId}")
+	@GetMapping("/api/orders/id/{orderId}")
 	public Order getOrderById(@PathVariable("orderId") int orderId);
 }

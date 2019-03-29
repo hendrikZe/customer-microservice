@@ -19,9 +19,9 @@ public class OrderRestConnectorRequesterTest {
 	OrderRestConnectorRequester orderRestConnectorRequester;
 	@Test
 	public void test() {
-		Order order = orderRestConnectorRequester.getOrderById(3);
+		Order order = orderRestConnectorRequester.getOrderById(41);
 		System.out.println(order.getOrderPositionIds().get(0));
-		Assert.assertNotNull(orderRestConnectorRequester.getOrderById(3));
+		Assert.assertNotNull(orderRestConnectorRequester.getOrderById(41));
 	}
 
 

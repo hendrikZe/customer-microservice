@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import de.leuphana.article.component.structure.Article;
 
 @Service
-@FeignClient(name="article-microservice", url= "http://localhost:8084/api/articles")
+@FeignClient(name="article-Microservice")
 public interface ArticleRestConnectorRequester {
-	@GetMapping("/id/{articleId}")
+	@GetMapping("api/articles/id/{articleId}")
 	public Article getArticleById(@PathVariable("articleId") int articleId);
 }
