@@ -10,6 +10,6 @@ import de.leuphana.article.component.structure.Article;
 @Service
 @FeignClient(name="article-Microservice")
 public interface ArticleRestConnectorRequester {
-	@GetMapping("api/articles/id/{articleId}")
+	@GetMapping("/api/articles/id/{articleId}")
 	public Article getArticleById(@PathVariable("articleId") int articleId);
 }
