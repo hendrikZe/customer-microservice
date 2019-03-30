@@ -116,4 +116,13 @@ public class CustomerSpringDataConnectorRequester {
 		
 	}
 
+	public List<Customer> findAll() {
+		List<Customer> result = new ArrayList<Customer>();
+		Iterable<CustomerEntity> customerEntities = customerJpaRepository.findAll();
+		for (CustomerEntity customerEntity : customerEntities) {
+			result.add(CustomerMapper.convert2Customer(customerEntity));
+		}
+		return result;
+	}
+
 }

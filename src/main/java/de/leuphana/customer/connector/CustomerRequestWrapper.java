@@ -1,5 +1,6 @@
 package de.leuphana.customer.connector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.leuphana.customer.component.structure.Cart;
@@ -12,6 +13,10 @@ public class CustomerRequestWrapper {
 	private List<CartItem> cartItems;
 	private Customer customer;
 
+	public CustomerRequestWrapper() {
+		cartItems = new ArrayList<CartItem>();
+	}
+	
 	public Cart getCart() {
 		// TODO Auto-generated method stub
 		return cart;

@@ -146,5 +146,9 @@ public class CustomerService {
 		public void deleteCustomerById(int customerId) {
 			customerSpringDataConnectorRequester.deleteCustomer(customerSpringDataConnectorRequester.findCustomerById(customerId));			
 		}
+
+		public List<Customer> getAllCustomers() {
+			return customerSpringDataConnectorRequester.findAll();
+		}
 	}
 
