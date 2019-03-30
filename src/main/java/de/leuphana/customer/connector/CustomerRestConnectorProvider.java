@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.qos.logback.classic.Logger;
 import de.leuphana.customer.component.behaviour.CustomerService;
 import de.leuphana.customer.component.structure.Cart;
+import de.leuphana.customer.component.structure.CartItem;
 import de.leuphana.customer.component.structure.Customer;
 
 @RestController
@@ -56,5 +57,15 @@ public class CustomerRestConnectorProvider {
 	public Cart getCartById(@PathVariable int cartId) {
 		System.out.println("Will select Cart: ");
 		return customerService.getCartById(cartId);
+	}
+	
+	@GetMapping("/cart/cartItem/{cartItemId}")
+	public CartItem getCartItemById(@PathVariable int cartItemId) {
+		return customerService.getCartItemById(cartItemId);
+	}
+	
+	@PostMapping("/cart/{cartId}/article/id/{articleId}/quantity/{quantity}")
+	public void addArticleToCart(@PathVariable int cartId, @PathVariable int articleId, @PathVariable int quantity) {
+		customerService.addCartItem(cartId, articleId, quantity);
 	}
 }

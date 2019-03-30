@@ -22,8 +22,8 @@ import de.leuphana.customer.connector.ArticleRestConnectorRequester;
 import de.leuphana.customer.connector.CustomerRestConnectorProvider;
 import de.leuphana.customer.connector.CustomerSpringDataConnectorRequester;
 import de.leuphana.customer.connector.OrderRestConnectorRequester;
+import de.leuphana.customer.connector.mapper.CartItemMapper;
 import de.leuphana.order.component.structure.Order;
-
 
 @EnableJpaRepositories("de.leuphana.customer.connector")
 @EntityScan("de.leuphana.customer.connector.entity")
@@ -39,7 +39,6 @@ public class CustomerService {
 	private ArticleRestConnectorRequester articleRestConnectorRequester;
 	@Autowired
 	private OrderRestConnectorRequester orderRestConnectorRequester;
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(CustomerService.class, args);
@@ -57,6 +56,7 @@ public class CustomerService {
 	public Article getArticleById(int id) {
 		return articleRestConnectorRequester.getArticleById(id);
 	}
+
 	public Order getOrderById(int id) {
 		return orderRestConnectorRequester.getOrderById(id);
 	}
@@ -66,89 +66,93 @@ public class CustomerService {
 	}
 
 	public void addCartItem(int cartId, int articleId, int quantity) {
-		//Cart selektieren, dann CartItems selektieren,
-		//Dann gucken ob article vorhanden, wenn ja, IncrementQuantitiy und Update
-		//Sonst insert
+		// Cart selektieren, dann CartItems selektieren,
+		// Dann gucken ob article vorhanden, wenn ja, IncrementQuantitiy und Update
+		// Sonst insert
 		Cart cart = customerSpringDataConnectorRequester.findCartById(cartId);
 		Boolean cartItemExists = false;
 		for (Integer cartItemId : cart.getCartItemIds()) {
-			 CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
-			 if(cartItem.getArticleId() == articleId) {
-				 cartItem.increaseQuantity(quantity);
-				 customerSpringDataConnectorRequester.insertOrUpdateCartItem(cartItem);
-				 cartItemExists = true;
-			 }
+			CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
+			if (cartItem.getArticleId() == articleId) {
+				cartItem.increaseQuantity(quantity);
+				customerSpringDataConnectorRequester.insertOrUpdateCartItem(cartItem);
+				cart.setNumberOfArticles(cart.getNumberOfArticles() + quantity);
+				cartItemExists = true;
+			}
 		}
-		if(!cartItemExists) {
+		if (!cartItemExists) {
 			CartItem cartItem = new CartItem();
 			cartItem.setArticleId(articleId);
 			cartItem.setQuantity(quantity);
 			int cartItemId = customerSpringDataConnectorRequester.insertOrUpdateCartItem(cartItem).getCartItemId();
 			cart.addCartItemId(cartItemId);
-			cart.setNumberOfArticles(cart.getNumberOfArticles()+quantity);
-			customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
+			cart.setNumberOfArticles(cart.getNumberOfArticles() + quantity);
 		}
-	}	
+		customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
+	}
+
 	public void deleteCartItem(int cartId, int articleId) {
 		Cart cart = customerSpringDataConnectorRequester.findCartById(cartId);
 		for (Integer cartItemId : cart.getCartItemIds()) {
-			 CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
-			 if(cartItem.getArticleId() == articleId) {
-				 cart.removeCartItemId(cartItem.getCartItemId());
-				 cart.setNumberOfArticles(cart.getNumberOfArticles()-cartItem.getQuantity());
-				 customerSpringDataConnectorRequester.removeCartItem(cartItem);
-				 customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
-				 break;
-			 }
-			 }
+			CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
+			if (cartItem.getArticleId() == articleId) {
+				cart.removeCartItemId(cartItem.getCartItemId());
+				cart.setNumberOfArticles(cart.getNumberOfArticles() - cartItem.getQuantity());
+				customerSpringDataConnectorRequester.removeCartItem(cartItem);
+				customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
+				break;
+			}
+		}
 	}
-	
+
+	public CartItem getCartItemById(int cartItemId) {
+		return customerSpringDataConnectorRequester.findCartItemById(cartItemId);
+	}
 
 	public void decrementArticleQuantity(int cartId, Integer articleId, int quantity) {
 		Cart cart = customerSpringDataConnectorRequester.findCartById(cartId);
 		for (Integer cartItemId : cart.getCartItemIds()) {
-			 CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
-			 if(cartItem.getArticleId() == articleId) {
-				 cartItem.decreaseQuantity(quantity);
-				 if(cartItem.getQuantity()<= 0) {
-					 customerSpringDataConnectorRequester.removeCartItem(cartItem);
-					 cart.removeCartItemId(cartItemId);
-				 }
-				 else {
-					 customerSpringDataConnectorRequester.insertOrUpdateCartItem(cartItem);					 
-				 }
-				 cart.setNumberOfArticles(cart.getNumberOfArticles()-quantity);
-				 customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
-				 break;
-			 }
-			 }
-		}
-	
-
-		public double getTotalPrice(int cartId) {
-			double totalPrice = 0.0;
-			Cart cart = customerSpringDataConnectorRequester.findCartById(cartId);
-			for (Integer cartItemId : cart.getCartItemIds()) {
-				 CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
-				 totalPrice += cartItem.getQuantity() * articleRestConnectorRequester.getArticleById(cartItem.getArticleId()).getPrice();
-				 }
-			return totalPrice;
-		}
-
-		public Customer insertCustomer(Customer customer, Cart cart, List<CartItem> cartItems) {
-			return customerSpringDataConnectorRequester.insertCustomer(customer, cart, cartItems);
-		}
-
-		public Customer getCustomerById(int customerId) {
-			return customerSpringDataConnectorRequester.findCustomerById(customerId);
-		}
-
-		public void deleteCustomerById(int customerId) {
-			customerSpringDataConnectorRequester.deleteCustomer(customerSpringDataConnectorRequester.findCustomerById(customerId));			
-		}
-
-		public List<Customer> getAllCustomers() {
-			return customerSpringDataConnectorRequester.findAll();
+			CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
+			if (cartItem.getArticleId() == articleId) {
+				cartItem.decreaseQuantity(quantity);
+				if (cartItem.getQuantity() <= 0) {
+					customerSpringDataConnectorRequester.removeCartItem(cartItem);
+					cart.removeCartItemId(cartItemId);
+				} else {
+					customerSpringDataConnectorRequester.insertOrUpdateCartItem(cartItem);
+				}
+				cart.setNumberOfArticles(cart.getNumberOfArticles() - quantity);
+				customerSpringDataConnectorRequester.insertOrUpdateCart(cart);
+				break;
+			}
 		}
 	}
 
+	public double getTotalPrice(int cartId) {
+		double totalPrice = 0.0;
+		Cart cart = customerSpringDataConnectorRequester.findCartById(cartId);
+		for (Integer cartItemId : cart.getCartItemIds()) {
+			CartItem cartItem = customerSpringDataConnectorRequester.findCartItemById(cartItemId);
+			totalPrice += cartItem.getQuantity()
+					* articleRestConnectorRequester.getArticleById(cartItem.getArticleId()).getPrice();
+		}
+		return totalPrice;
+	}
+
+	public Customer insertCustomer(Customer customer, Cart cart, List<CartItem> cartItems) {
+		return customerSpringDataConnectorRequester.insertCustomer(customer, cart, cartItems);
+	}
+
+	public Customer getCustomerById(int customerId) {
+		return customerSpringDataConnectorRequester.findCustomerById(customerId);
+	}
+
+	public void deleteCustomerById(int customerId) {
+		customerSpringDataConnectorRequester
+				.deleteCustomer(customerSpringDataConnectorRequester.findCustomerById(customerId));
+	}
+
+	public List<Customer> getAllCustomers() {
+		return customerSpringDataConnectorRequester.findAll();
+	}
+}

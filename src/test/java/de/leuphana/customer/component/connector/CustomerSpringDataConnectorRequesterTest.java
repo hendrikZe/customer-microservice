@@ -40,7 +40,7 @@ public class CustomerSpringDataConnectorRequesterTest {
 		//order.addOrderPosition(orderPosition);
 		
 		customer.setName("Hugo");
-		customer.addOrderId(11);
+		//customer.addOrderId(11);
 		customer = customerComponentSpringDataConnectorRequester.insertCustomer(customer,cart,Arrays.asList(cartItem));
 	}
 		

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Cart {
 
+	private Integer cartId;
+	
 	private List<Integer> cartItemIds;
 
 	private int numberOfArticles;
@@ -14,7 +16,13 @@ public class Cart {
 		numberOfArticles = 0;
 	}
 
-	
+	public Integer getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
 
 	public List<Integer> getCartItemIds() {
 		return cartItemIds;
