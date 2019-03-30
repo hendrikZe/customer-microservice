@@ -68,4 +68,9 @@ public class CustomerRestConnectorProvider {
 	public void addArticleToCart(@PathVariable int cartId, @PathVariable int articleId, @PathVariable int quantity) {
 		customerService.addCartItem(cartId, articleId, quantity);
 	}
+	
+	@PostMapping("/cart/id/{cartId}/article/id/{articleId}/decrement/{quantity}")
+	public void decrementArticleQuantityInCart(@PathVariable int cartId, @PathVariable int articleId, @PathVariable int quantity) {
+		customerService.decrementArticleQuantity(cartId, articleId, quantity);
+	}
 }
