@@ -3,6 +3,7 @@ package de.leuphana.customer.connector.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -21,7 +22,7 @@ public class CartItemEntity {
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getCartItemId() {
 		return cartItemId;
 	}
